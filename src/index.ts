@@ -1,2 +1,4 @@
 
-console.log('hi')
+export const testFunction = () => {
+    return "hello world";
+};
