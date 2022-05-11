@@ -1,0 +1,17 @@
+{
+    "name": "data-structure",
+    "version": "1.0.0",
+    "main": "./src/index.js",
+    "author": "MinyShrimp <ksk7584@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@types/node": "^17.0.32",
+        "ts-node": "^10.7.0",
+        "typescript": "^4.6.4"
+    },
+    "scripts": {
+        "build": "tsc",
+        "start": "node ./bin/index.js",
+        "dev": "ts-node ./src/index.ts"
+    }
+}
