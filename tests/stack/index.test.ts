@@ -15,10 +15,7 @@ describe('Testing Stack', () => {
 
     test('pop ok', () => {
         let stack = new Stack<Number>();
-
         stack.push(1,2,3,4);
-        expect( stack.toString() ).toEqual( "1,2,3,4" );
-
         expect( stack.pop() ).toEqual(4);
         expect( stack.toString() ).toEqual( "1,2,3" );
     });

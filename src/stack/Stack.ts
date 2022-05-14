@@ -24,7 +24,7 @@ class Stack<T> {
     }
 
     public toString = (): String => {
-        return this.array.toString();
+        return `[${this.array.toString()}]`;
     }
 }
 
