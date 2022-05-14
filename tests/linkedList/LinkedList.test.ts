@@ -2,11 +2,11 @@
 import List from "../../src/linkedList/LinkedList";
 
 describe('Testing : 연결리스트', () => {
-    let list: List<Number>;
+    let list: List<number>;
 
     // 모든 테스트가 시작하기 전에 한번 실행된다.
     beforeAll(() => {
-        list = new List();
+        list = new List<number>();
     });
 
     // 하나의 테스트가 시작하기 전에 매번 실행된다.
@@ -34,13 +34,32 @@ describe('Testing : 연결리스트', () => {
         expect( list.getCount() ).toEqual(3);
     });
     
-    
+    test('', () => {
+        list.setSortRule( ( d1: number | null, d2: number | null ): boolean => {
+            if( d1 === null || d2 === null) { return false; }
+            return d1 >= d2;
+        });
+
+        list.insert(11); list.insert(22); list.insert(33); 
+        list.insert(10); list.insert(15); list.insert(25);
+
+        expect( list.fisrt() ).toEqual( [  true,   10 ] );
+        expect( list.next()  ).toEqual( [  true,   11 ] );
+        expect( list.next()  ).toEqual( [  true,   15 ] );
+        expect( list.next()  ).toEqual( [  true,   22 ] );
+        expect( list.next()  ).toEqual( [  true,   25 ] );
+        expect( list.next()  ).toEqual( [  true,   33 ] );
+        expect( list.next()  ).toEqual( [ false, null ] );
+
+        expect( list.getCount() ).toEqual(6);
+    });
+
 
     test('Remove Data', () => {
         const rData = 22;
 
         list.insert(11); list.insert(11); 
-        list.insert(22); list.insert(22); 
+        list.insert(22); list.insert(22); list.insert(22); 
         list.insert(33); 
 
         let data: [ boolean, Number | null ] = list.fisrt();
