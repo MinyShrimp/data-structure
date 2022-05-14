@@ -16,7 +16,6 @@ export default class LinkedListByArray<T> {
     // 데이터 저장
     public insert = ( data: T ): boolean => {
         if( this.numOfData >= this.LIST_LEN ) {
-            console.log("저장이 불가능합니다.");
             return false;
         }
 
