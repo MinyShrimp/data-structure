@@ -20,7 +20,7 @@ export default class LinkedList<T> {
     private memory    : ListType<T> = { "head": this.head };
 
     private numOfData : number = 0;
-    private comp      : ( (d1: T | null, d2: T | null) => boolean ) | null = null;
+    private comp      : ( (d1: T, d2: T) => boolean ) | null = null;
 
     constructor() {}
 
@@ -45,7 +45,7 @@ export default class LinkedList<T> {
         let pred : Node<T> = this.head;
         while( 
             pred.next !== null && 
-            this.comp( data, this.memory[pred.next].data )
+            this.comp( data, this.memory[pred.next].data as T )
         ) {
             pred = this.memory[pred.next];
         }
@@ -96,18 +96,16 @@ export default class LinkedList<T> {
         const key  = this.before.next;
         const data = this.cur.data;
 
-        if( key !== null ) {
-            this.before.next = this.cur.next;
-            this.cur = this.before;
+        this.before.next = this.cur.next;
+        this.cur = this.before;
 
-            delete this.memory[key];
-            this.numOfData -= 1;
-        }
+        delete this.memory[key as string];
+        this.numOfData -= 1;
 
         return data;
     }
 
-    public setSortRule = ( sortRule: (d1: T | null, d2: T | null) => boolean ) => {
+    public setSortRule = ( sortRule: (d1: T, d2: T) => boolean ) => {
         this.comp = sortRule;
     }
 

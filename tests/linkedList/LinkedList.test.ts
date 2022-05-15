@@ -35,10 +35,7 @@ describe('Testing : 연결리스트', () => {
     });
     
     test('', () => {
-        list.setSortRule( ( d1: number | null, d2: number | null ): boolean => {
-            if( d1 === null || d2 === null) { return false; }
-            return d1 >= d2;
-        });
+        list.setSortRule( ( d1: number, d2: number ): boolean => d1 >= d2);
 
         list.insert(11); list.insert(22); list.insert(33); 
         list.insert(10); list.insert(15); list.insert(25);
