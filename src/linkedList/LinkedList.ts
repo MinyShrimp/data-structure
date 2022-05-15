@@ -86,7 +86,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 첫 데이터 참조
-    public first = () : [ boolean, T | null ] => {
+    public first = (): [ boolean, T | null ] => {
         const head = this.getReperence( this.head );
 
         if( head.next === null ) {
