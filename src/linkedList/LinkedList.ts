@@ -1,4 +1,12 @@
 
+/**
+ * 메모리 기반 연결 리스트
+ * Typescript에서는 Node Class Instanse의 주소값을 알아올 수 있는 방법이 없기 때문에
+ * memory 를 활용하여 구현
+ */
+
+import AbstractLinkedList from "./AbstractLinkedList";
+
 interface Node<T> {
     data: T | null,
     next: string | null
@@ -12,18 +20,30 @@ const getRandomKey = () => {
     return Math.random().toString(16).substring(2, 11);
 }
 
-export default class LinkedList<T> {
+export default class LinkedList<T> extends AbstractLinkedList<T> {
     private head      : Node<T> = { data: null, next: null };
     private cur       : Node<T> = { data: null, next: null };
     private before    : Node<T> = { data: null, next: null };
 
     private memory    : ListType<T> = { "head": this.head };
 
-    private numOfData : number = 0;
     private comp      : ( (d1: T, d2: T) => boolean ) | null = null;
 
-    constructor() {}
+    constructor() { super(); }
 
+    // 데이터 초기화
+    public init = (): void => {
+        this.head   = { data: null, next: null };
+        this.cur    = { data: null, next: null };
+        this.before = { data: null, next: null };
+
+        this.memory = { "head": this.head };
+
+        this.numOfData = 0;
+        this.comp = null;
+    }
+
+    // 맨 앞에 저장
     private FInsert = ( data: T ): void => {
         const newKey  : string  = getRandomKey();
         const newNode : Node<T> = { data: data, next: this.head.next };
@@ -34,6 +54,7 @@ export default class LinkedList<T> {
         this.numOfData += 1;
     }
 
+    // 정렬기준으로 저장
     private SInsert = ( data: T ): void => {
         if( this.comp === null || this.head.next === null ) { this.FInsert(data); return ; }
 
@@ -66,7 +87,7 @@ export default class LinkedList<T> {
     }
 
     // 첫 데이터 참조
-    public fisrt = () : [ boolean, T | null ] => {
+    public first = () : [ boolean, T | null ] => {
         if( this.head.next === null ) {
             return [ false, null ];
         }
@@ -105,22 +126,7 @@ export default class LinkedList<T> {
         return data;
     }
 
-    public setSortRule = ( sortRule: (d1: T, d2: T) => boolean ) => {
+    public setSortRule = ( sortRule: (d1: T, d2: T) => boolean ): void => {
         this.comp = sortRule;
     }
-
-    // 데이터 초기화
-    public init = () => {
-        this.head   = { data: null, next: null };
-        this.cur    = { data: null, next: null };
-        this.before = { data: null, next: null };
-
-        this.memory = { "head": this.head };
-
-        this.numOfData = 0;
-        this.comp = null;
-    }
-
-    // 저장된 데이터의 수 반환
-    public getCount = () => { return this.numOfData; }
 };

@@ -18,7 +18,7 @@ describe('Testing : 배열 기반 연결리스트', () => {
 
     // 빈 list 에서 첫 번째 값 추출하기
     test('Get First Data in Empty List', () => {
-        expect( list.fisrt() ).toEqual([ false, null ]);
+        expect( list.first() ).toEqual([ false, null ]);
         expect( list.getCount() ).toEqual(0);
     });
 
@@ -26,7 +26,7 @@ describe('Testing : 배열 기반 연결리스트', () => {
     test('Get Next Datas', () => {
         list.insert(11); list.insert(22); list.insert(33); 
         
-        expect( list.fisrt() ).toEqual( [  true,   11 ] );
+        expect( list.first() ).toEqual( [  true,   11 ] );
         expect( list.next()  ).toEqual( [  true,   22 ] );
         expect( list.next()  ).toEqual( [  true,   33 ] );
         expect( list.next()  ).toEqual( [ false, null ] );
@@ -48,7 +48,7 @@ describe('Testing : 배열 기반 연결리스트', () => {
         list.insert(22); list.insert(22); 
         list.insert(33); 
 
-        let data: [ boolean, Number | null ] = list.fisrt();
+        let data: [ boolean, Number | null ] = list.first();
         
         if( data[0] ) {
             if( data[1] === rData ) {
@@ -67,7 +67,7 @@ describe('Testing : 배열 기반 연결리스트', () => {
             }
         }  
 
-        expect( list.fisrt() ).toEqual( [  true,   11 ] );
+        expect( list.first() ).toEqual( [  true,   11 ] );
         expect( list.next()  ).toEqual( [  true,   11 ] );
         expect( list.next()  ).toEqual( [  true,   33 ] );
         expect( list.next()  ).toEqual( [ false, null ] );
