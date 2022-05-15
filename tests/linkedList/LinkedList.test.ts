@@ -22,6 +22,22 @@ describe('Testing : 연결리스트', () => {
         expect( list.getCount() ).toEqual(0);
     });
 
+    // First를 호출하지 않고 Next를 호출
+    test('Must Call Next after First', () => {
+        list.insert(11); list.insert(22); list.insert(33); 
+
+        expect( () => list.next() ).toThrow( "Must Call Next after First" );
+        expect( list.getCount() ).toEqual(3);
+    });
+
+    // First를 호출하지 않고 Remove를 호출
+    test('Must Call Remove after First', () => {
+        list.insert(11); list.insert(22); list.insert(33); 
+
+        expect( () => list.remove() ).toThrow( "Unvalid Poisition" );
+        expect( list.getCount() ).toEqual(3);
+    });
+
     // Get Next Datas
     test('Get Next Datas', () => {
         list.insert(11); list.insert(22); list.insert(33); 
@@ -34,7 +50,8 @@ describe('Testing : 연결리스트', () => {
         expect( list.getCount() ).toEqual(3);
     });
     
-    test('', () => {
+    // Sort Insert
+    test('Sort Insert', () => {
         list.setSortRule( ( d1: number, d2: number ): boolean => d1 >= d2);
 
         list.insert(11); list.insert(22); list.insert(33); 
@@ -51,7 +68,7 @@ describe('Testing : 연결리스트', () => {
         expect( list.getCount() ).toEqual(6);
     });
 
-
+    // Remove Data
     test('Remove Data', () => {
         const rData = 22;
 

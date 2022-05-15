@@ -4,6 +4,7 @@
     "main": "./src/index.js",
     "author": "MinyShrimp <ksk7584@gmail.com>",
     "license": "MIT",
+    "private": true,
     "dependencies": {
         "@types/node": "^17.0.32",
         "ts-node": "^10.7.0",
