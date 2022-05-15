@@ -1,6 +1,9 @@
 
 /**
  * 범용 Memory Class
+ * 
+ * Map 자료구조에 key값과 value값을 넣어
+ * 가상메모리처럼 사용할 수 있도록 제작한 Class
  */
 
 export default class Memory {
@@ -49,5 +52,9 @@ export default class Memory {
     // copy of value
     public getValue = ( key: string ): Readonly<any> => {
         return this.getReperence( key );
+    }
+
+    public getMemory = (): Readonly<Map<string, any>> => {
+        return this.memorys;
     }
 };

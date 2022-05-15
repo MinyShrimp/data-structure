@@ -42,7 +42,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 맨 앞에 저장
-    protected FInsert = ( data: T ): void => {
+    private FInsert = ( data: T ): void => {
         const head = this.getReperence( this.head );
 
         const newNode: Node<T> = { data: data, next: head.next };
@@ -54,7 +54,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 정렬기준으로 저장
-    protected SInsert = ( data: T ): void => {
+    private SInsert = ( data: T ): void => {
         const head = this.getReperence( this.head );
 
         if( this.comp === null || head.next === null ) { this.FInsert(data); return ; }
@@ -101,7 +101,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 두 번째 이후 데이터 참조
-    public next = () : [ boolean, T | null ] => {
+    public next = (): [ boolean, T | null ] => {
         if( this.cur === null ) {
             throw new Error( "Must Call Next after First" );
         }
@@ -119,7 +119,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 참조한 데이터 삭제
-    public remove = (): T | null => {
+    public remove = (): T => {
         if( this.before === null || this.cur === null ) {
             throw new Error( "Unvalid Poisition" );
         }
@@ -128,7 +128,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
         const cur    = this.getReperence( this.cur );
 
         const key  = this.cur;
-        const data = cur.data;
+        const data = cur.data as T;
 
         before.next = cur.next;
         this.cur = this.before;
