@@ -1,11 +1,11 @@
 
+import LinkedList from "./LinkedList"
 
-export default class CircleLinkedList<T> {
+export default class CircleLinkedList<T> extends LinkedList<T> {
 
-    constructor() {}
+    constructor() { super(); }
 
     public init = (): void => {
-
     }
 
 };

@@ -6,29 +6,26 @@
  */
 
 import Memory from "../memory/Memory";
+import Node   from "../node/Node";
+
 import AbstractLinkedList from "./AbstractLinkedList";
 
-interface Node<T> {
-    data: T | null,
-    next: string | null
-};
-
 export default class LinkedList<T> extends AbstractLinkedList<T> {
-    private memory    : Memory = new Memory();
+    protected memory    : Memory = new Memory();
 
-    private head      : string = "";
-    private cur       : string | null = null;
-    private before    : string | null = null;
+    protected head      : string = "";
+    protected cur       : string | null = null;
+    protected before    : string | null = null;
 
-    private comp      : ( (d1: T, d2: T) => boolean ) | null = null;
+    protected comp      : ( (d1: T, d2: T) => boolean ) | null = null;
 
     constructor() { super(); }
 
-    private getValue = ( key: string ): Readonly<Node<T>> => {
+    protected getValue = ( key: string ): Readonly<Node<T>> => {
         return this.memory.getValue( key );
     }
 
-    private getReperence = ( key: string ): Node<T> => {
+    protected getReperence = ( key: string ): Node<T> => {
         return this.memory.getReperence( key );
     }
 
@@ -36,7 +33,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     public init = (): void => {
         this.memory.clear();
         
-        this.head   = this.memory.insert( { data: "HEAD",   next: null } );
+        this.head   = this.memory.insert( { data: "HEAD", next: null } );
         this.cur    = null;
         this.before = null;
 
@@ -45,10 +42,10 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 맨 앞에 저장
-    private FInsert = ( data: T ): void => {
+    protected FInsert = ( data: T ): void => {
         const head = this.getReperence( this.head );
 
-        const newNode : Node<T> = { data: data, next: head.next };
+        const newNode: Node<T> = { data: data, next: head.next };
         const newKey = this.memory.insert( newNode );
 
         head.next = newKey;
@@ -57,12 +54,12 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     }
 
     // 정렬기준으로 저장
-    private SInsert = ( data: T ): void => {
+    protected SInsert = ( data: T ): void => {
         const head = this.getReperence( this.head );
 
         if( this.comp === null || head.next === null ) { this.FInsert(data); return ; }
 
-        const newNode : Node<T> = { data: data, next: null };
+        const newNode: Node<T> = { data: data, next: null };
         const newKey = this.memory.insert( newNode );
 
         let pred : Node<T> = head;

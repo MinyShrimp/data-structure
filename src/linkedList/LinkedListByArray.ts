@@ -32,7 +32,7 @@ export default class LinkedListByArray<T> extends AbstractLinkedList<T> {
 
     // 첫 데이터 참조
     // return [ Bool, Data ]
-    public first = () : [ boolean, T | null ] => {
+    public first = (): [ boolean, T | null ] => {
         // 저장된 데이터가 하나도 없다면
         if( this.numOfData === 0 ) {
             return [false, null];
@@ -43,7 +43,7 @@ export default class LinkedListByArray<T> extends AbstractLinkedList<T> {
     }
 
     // 두 번째 이후 데이터 참조
-    public next = () : [ boolean, T | null ] => {
+    public next = (): [ boolean, T | null ] => {
         // 더 이상 참조할 데이터가 없다면
         if( this.curPosition >= this.numOfData - 1 ) {
             return [false, null];
