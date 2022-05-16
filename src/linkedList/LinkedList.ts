@@ -5,27 +5,26 @@
  * memory 를 활용하여 구현
  */
 
-import Memory from "../memory/Memory";
 import Node   from "../node/Node";
-
+import Memory from "../memory/Memory";
 import AbstractLinkedList from "./AbstractLinkedList";
 
 export default class LinkedList<T> extends AbstractLinkedList<T> {
-    protected memory    : Memory = new Memory();
+    private memory    : Memory = new Memory();
 
-    protected head      : string = "";
-    protected cur       : string | null = null;
-    protected before    : string | null = null;
+    private head      : string = "";
+    private cur       : string | null = null;
+    private before    : string | null = null;
 
-    protected comp      : ( (d1: T, d2: T) => boolean ) | null = null;
+    private comp      : ( (d1: T, d2: T) => boolean ) | null = null;
 
     constructor() { super(); }
 
-    protected getValue = ( key: string ): Readonly<Node<T>> => {
+    private getValue = ( key: string ): Readonly<Node<T>> => {
         return this.memory.getValue( key );
     }
 
-    protected getReperence = ( key: string ): Node<T> => {
+    private getReperence = ( key: string ): Node<T> => {
         return this.memory.getReperence( key );
     }
 

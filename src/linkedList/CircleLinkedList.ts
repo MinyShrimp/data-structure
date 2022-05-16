@@ -1,14 +1,32 @@
 
-import Node from "../node/Node";
-import LinkedList from "./LinkedList"
+import Node   from "../node/Node";
+import Memory from "../memory/Memory";
+import AbstractLinkedList from "./AbstractLinkedList";
 
-export default class CircleLinkedList<T> extends LinkedList<T> {
+export default class CircleLinkedList<T> extends AbstractLinkedList<T> {
+    private memory    : Memory = new Memory();
 
-    private dummy: string = "";
-    private tail: string  = "";
+    private head      : string = "";
+    private dummy     : string = "";
+    private tail      : string = "";
+    private cur       : string | null = null;
+    private before    : string | null = null;
 
     constructor() { super(); }
 
+    // Memory Mapping 함수
+    private getValue = ( key: string ): Readonly<Node<T>> => {
+        return this.memory.getValue( key );
+    }
+
+    private getReperence = ( key: string ): Node<T> => {
+        return this.memory.getReperence( key );
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Init
+
+    // 초기화
     public init = (): void => {
         this.memory.clear();
 
@@ -22,10 +40,12 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         this.before = null;
 
         this.numOfData = 0;
-        this.comp = null;
     }
 
-    // 머리에 노드를 추가
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Insert
+
+    // 머리에 노드를 추가 ( 내부 )
     private __insertHead = ( newKey: string, newNode: Node<T> ) => {
         const dummy = this.getReperence( this.dummy );
 
@@ -33,7 +53,7 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         dummy.next = newKey;
     }
 
-    // 꼬리에 노드를 추가
+    // 꼬리에 노드를 추가 ( 내부 )
     private __insertTail = ( newKey: string, newNode: Node<T> ) => {
         const tail = this.getReperence( this.tail );
         const tailNode = this.getReperence( tail.next as string );
@@ -43,7 +63,7 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         tail.next = newKey;
     }
 
-    // 데이터 추가
+    // 데이터 추가 ( 내부 통합 )
     private __insert = ( 
         data: T, 
         callBack: ( newKey: string, newNode: Node<T> ) => void
@@ -69,12 +89,12 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         this.numOfData += 1;
     }
 
-    // 머리에 데이터 추가
+    // 머리에 데이터 추가 ( 외부 )
     public insertHead = ( data: T ): void => {
         this.__insert( data, this.__insertHead );
     }
 
-    // 꼬리에 데이터 추가
+    // 꼬리에 데이터 추가 ( 외부 )
     public insertTail = ( data: T ): void => {
         this.__insert( data, this.__insertTail );
     }
@@ -83,6 +103,9 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
     public insert = ( data: T ): void => { 
         throw new Error(`Use "insertHead" or "insertTail" instead of "insert"`); 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Search
 
     // 첫 데이터 참조
     public first = (): [ boolean, T | null ] => {
@@ -113,6 +136,9 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         const nextCur = this.getValue(this.cur as string);
         return [ cur.next !== this.dummy, nextCur.data ];
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Remove
 
     // 데이터 삭제
     public remove = ( ): T => {

@@ -44,13 +44,13 @@ export default class Memory {
         this.memorys.clear();
     }
 
-    // copy of reperence
+    // copy by reperence
     public getReperence = ( key: string ): any => {
         this.isValidKey(key);
         return this.memorys.get( key );
     }
 
-    // copy of value
+    // copy by value
     public getValue = ( key: string ): Readonly<any> => {
         return this.getReperence( key );
     }
