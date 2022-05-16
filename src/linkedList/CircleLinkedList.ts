@@ -1,11 +1,8 @@
 
 import Node   from "../node/Node";
-import Memory from "../memory/Memory";
 import AbstractLinkedList from "./AbstractLinkedList";
 
 export default class CircleLinkedList<T> extends AbstractLinkedList<T> {
-    private memory    : Memory = new Memory();
-
     private head      : string = "";
     private dummy     : string = "";
     private tail      : string = "";
@@ -13,15 +10,6 @@ export default class CircleLinkedList<T> extends AbstractLinkedList<T> {
     private before    : string | null = null;
 
     constructor() { super(); }
-
-    // Memory Mapping 함수
-    private getValue = ( key: string ): Readonly<Node<T>> => {
-        return this.memory.getValue( key );
-    }
-
-    private getReperence = ( key: string ): Node<T> => {
-        return this.memory.getReperence( key );
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Init

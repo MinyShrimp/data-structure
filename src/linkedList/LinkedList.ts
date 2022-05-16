@@ -6,12 +6,9 @@
  */
 
 import Node   from "../node/Node";
-import Memory from "../memory/Memory";
 import AbstractLinkedList from "./AbstractLinkedList";
 
 export default class LinkedList<T> extends AbstractLinkedList<T> {
-    private memory    : Memory = new Memory();
-
     private head      : string = "";
     private cur       : string | null = null;
     private before    : string | null = null;
@@ -19,14 +16,6 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
     private comp      : ( (d1: T, d2: T) => boolean ) | null = null;
 
     constructor() { super(); }
-
-    private getValue = ( key: string ): Readonly<Node<T>> => {
-        return this.memory.getValue( key );
-    }
-
-    private getReperence = ( key: string ): Node<T> => {
-        return this.memory.getReperence( key );
-    }
 
     // 데이터 초기화
     public init = (): void => {
@@ -93,7 +82,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
         }
     
         this.before = this.head;
-        this.cur    = head.next;
+        this.cur    = head.next as string;
 
         const data = this.getValue( this.cur ).data;
         return [ true, data ];
@@ -111,7 +100,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
         }
 
         this.before = this.cur;
-        this.cur    = cur.next;
+        this.cur    = cur.next as string;
 
         const data = this.getValue(this.cur).data;
         return [ true, data ];
