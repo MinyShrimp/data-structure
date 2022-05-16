@@ -4,15 +4,20 @@ import LinkedList from "./LinkedList"
 
 export default class CircleLinkedList<T> extends LinkedList<T> {
 
-    private tail: string = "";
+    private dummy: string = "";
+    private tail: string  = "";
 
     constructor() { super(); }
 
     public init = (): void => {
         this.memory.clear();
-        
-        this.head   = this.memory.insert( { data: "HEAD", next: null } );
-        this.tail   = this.memory.insert( { data: "TAIL", next: null } );
+
+        const dummyNode: Node<string> = { data: "DUMMY", next: null };
+        this.dummy = this.memory.insert( dummyNode );
+        dummyNode.next = this.dummy;
+
+        this.head   = this.memory.insert( { data: "HEAD",  next: this.dummy } );
+        this.tail   = this.memory.insert( { data: "TAIL",  next: this.dummy } );
         this.cur    = null;
         this.before = null;
 
@@ -22,13 +27,10 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
 
     // 머리에 노드를 추가
     private __insertHead = ( newKey: string, newNode: Node<T> ) => {
-        const tail = this.getReperence( this.tail );
-        const tailNode = this.getReperence( tail.next as string );
-        const head = this.getReperence( this.head );
+        const dummy = this.getReperence( this.dummy );
 
-        newNode.next = head.next;
-        tailNode.next = newKey;
-        head.next = newKey;
+        newNode.next = dummy.next;
+        dummy.next = newKey;
     }
 
     // 꼬리에 노드를 추가
@@ -54,12 +56,12 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         const newKey  : string  = this.memory.insert( newNode );
 
         if( this.numOfData === 0 ) {
-            const head = this.getReperence( this.head );
-            const tail = this.getReperence( this.tail );
+            const tail  = this.getReperence( this.tail );
+            const dummy = this.getReperence( this.dummy );
 
-            head.next = newKey;
-            tail.next = newKey;
-            newNode.next = newKey;
+            dummy.next = newKey;
+            tail.next  = newKey;
+            newNode.next = this.dummy;
         } else {
             callBack( newKey, newNode );
         }
@@ -82,6 +84,21 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         throw new Error(`Use "insertHead" or "insertTail" instead of "insert"`); 
     }
 
+    // 첫 데이터 참조
+    public first = (): [ boolean, T | null ] => {
+        const dummy = this.getReperence( this.dummy );
+
+        if( dummy.next === this.dummy ) {
+            return [ false, dummy.data ];
+        }
+    
+        this.before = this.dummy;
+        this.cur    = dummy.next as string;
+
+        const data = this.getValue( this.cur ).data;
+        return [ true, data ];
+    }
+
     // 두 번째 이후 데이터
     public next = (): [ boolean, T | null ] => {
         if( this.cur === null ) {
@@ -94,8 +111,7 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         this.cur    = cur.next;
 
         const nextCur = this.getValue(this.cur as string);
-        const headNode = this.getValue( this.head );
-        return [ cur.next !== headNode.next, nextCur.data ];
+        return [ cur.next !== this.dummy, nextCur.data ];
     }
 
     // 데이터 삭제
@@ -115,21 +131,15 @@ export default class CircleLinkedList<T> extends LinkedList<T> {
         const data = cur.data as T;
 
         const tail = this.getReperence( this.tail );
-        const taileNode = this.getReperence( tail.next as string );
 
-        if( key === tail.next ) {
-            if( tail.next === taileNode.next ) {
-                this.memory.remove( this.tail );
-                this.tail = "";
-            } else {
-                tail.next = this.before;
-            }
+        if( this.cur === tail.next ) {
+            tail.next = this.before;
         }
 
         before.next = cur.next;
         this.cur = this.before;
-
         this.memory.remove( key );
+
         this.numOfData -= 1;
 
         return data;

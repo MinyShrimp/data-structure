@@ -92,7 +92,7 @@ export default class LinkedList<T> extends AbstractLinkedList<T> {
         if( head.next === null ) {
             return [ false, null ];
         }
-
+    
         this.before = this.head;
         this.cur    = head.next;
 

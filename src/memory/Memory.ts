@@ -11,6 +11,7 @@ export default class Memory {
     
     constructor() {}
 
+    // 16진수의 랜덤한 11자리 숫자 반환
     private getRandomKey = (): string => {
         return Math.random().toString(16).substring(2, 11);
     }
@@ -54,6 +55,7 @@ export default class Memory {
         return this.getReperence( key );
     }
 
+    // get memory readonly
     public getMemory = (): Readonly<Map<string, any>> => {
         return this.memorys;
     }
