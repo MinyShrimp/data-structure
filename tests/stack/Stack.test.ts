@@ -2,27 +2,40 @@
 import Stack from "../../src/stack/Stack";
 
 describe('Testing Stack', () => {
+    let stack: Stack<number>;
+
+    beforeEach(() => {
+        // 하나의 테스트가 시작하기 전에 매번 실행된다.
+        stack = new Stack();
+    });
+
+
     test('empty pop', () => {
-        let stack = new Stack<Number>();
-        expect( stack.pop() ).toEqual( undefined );
+        expect( () => stack.pop() ).toThrowError("Stack is Empty");
+    });
+
+    test('empty top', () => {
+        expect( () => stack.top() ).toThrowError("Stack is Empty");
     });
 
     test('many push', () => {
-        let stack = new Stack<Number>();
-        stack.push(1,2,3,4);
-        expect( stack.toString() ).toEqual( "1,2,3,4" );
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        expect( stack.getDatas() ).toEqual( [4,3,2,1] );
     });
 
     test('pop ok', () => {
-        let stack = new Stack<Number>();
-        stack.push(1,2,3,4);
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
         expect( stack.pop() ).toEqual(4);
-        expect( stack.toString() ).toEqual( "1,2,3" );
-    });
-
-    test('push full', () => {
-        let stack = new Stack<Number>();
-        for(let i = 0; i < 100; i++) { stack.push(i); }
-        expect( stack.push(1) ).toEqual( undefined );
+        expect( stack.top() ).toEqual(3);
+        expect( stack.getDatas() ).toEqual( [3,2,1] );
+        stack.push(4);
+        expect( stack.top() ).toEqual(4);
+        expect( stack.getDatas() ).toEqual( [4,3,2,1] );
     });
 })
