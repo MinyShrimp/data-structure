@@ -9,7 +9,6 @@ describe('Testing Stack', () => {
         stack = new Stack();
     });
 
-
     test('empty pop', () => {
         expect( () => stack.pop() ).toThrowError("Stack is Empty");
     });
@@ -37,5 +36,18 @@ describe('Testing Stack', () => {
         stack.push(4);
         expect( stack.top() ).toEqual(4);
         expect( stack.getDatas() ).toEqual( [4,3,2,1] );
+    });
+
+    test('pop empty', () => {
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        expect( stack.pop() ).toEqual(4);
+        expect( stack.pop() ).toEqual(3);
+        expect( stack.pop() ).toEqual(2);
+        expect( stack.pop() ).toEqual(1);
+        expect( () => stack.pop() ).toThrowError("Stack is Empty");
+        expect( stack.getDatas() ).toEqual( [] );
     });
 })
