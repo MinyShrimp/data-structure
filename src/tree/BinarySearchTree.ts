@@ -19,6 +19,7 @@ export default class BinarySearchTree {
     private createNewNode = (key: number): string => {
         const newNode: TreeNode<number> = {
             data: key,
+            height: 0,
             left: null,
             right: null,
         };
