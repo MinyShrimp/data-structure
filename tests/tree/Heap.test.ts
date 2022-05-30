@@ -39,21 +39,26 @@ describe('Testing Stack', () => {
         expect( heap.getArray() ).toEqual([10, 9, 6, 7, 8, 2, 5, 1, 4, 3]);
         heap.sort();
         expect( heap.getArray() ).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    });
-
-    test('many push', () => {
-        const arr = Array.from({length : 10000}, (_, i) => i);
-        heap.insert( ...arr );
-
+        heap.make_heap();
+        expect( heap.getArray() ).toEqual([10, 9, 7, 8, 5, 6, 3, 1, 4, 2]);
         heap.sort();
-        const heap_arr = heap.getArray();
-        let flag = true;
-        for( let i = 0; i < heap_arr.length - 1; i++ ) {
-            if( heap_arr[i] > heap_arr[i + 1] ) {
-                flag = false; break;
-            }
-        }
-        
-        expect( flag ).toEqual(true);
+        expect( heap.getArray() ).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     });
+
+    // test('many push', () => {
+    //     const arr = Array.from({length : 10000}, (_, i) => i);
+    //     heap.insert( ...arr );
+
+    //     heap.sort();
+    //     const heap_arr = heap.getArray();
+    //     let flag = true;
+    //     for( let i = 0; i < heap_arr.length - 1; i++ ) {
+    //         if( heap_arr[i] > heap_arr[i + 1] ) {
+    //             flag = false; break;
+    //         }
+    //     }
+    //     expect( flag ).toEqual(true);
+
+    //     heap.make_heap();
+    // });
 })
